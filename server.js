@@ -17,7 +17,12 @@ const SESSION_TIMEOUT_MS = parseInt(process.env.SESSION_TIMEOUT_MS || '300000');
 // Configure multer for file uploads
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const sessionId = req.body.session_id || req.headers['x-session-id'];
+    // Generate or get session ID
+    let sessionId = req.headers['x-session-id'];
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      req.headers['x-session-id'] = sessionId;
+    }
     const sessionDir = path.join(UPLOAD_DIR, sessionId);
 
     try {
