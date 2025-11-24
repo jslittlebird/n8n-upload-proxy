@@ -16,8 +16,8 @@ services:
     volumes:
       - ./uploads:/app/uploads
     networks:
-      - homelab
+      - homelab_homelab
 
 networks:
-  homelab:
+  homelab_homelab:
     external: true
