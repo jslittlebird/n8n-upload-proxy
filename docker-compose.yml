@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  upload-proxy:
+    build: .
+    container_name: n8n-upload-proxy
+    restart: unless-stopped
+    ports:
+      - "3030:3000"
+    environment:
+      - PORT=3000
+      - UPLOAD_DIR=/app/uploads
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://n8n.nacolada.lan/webhook/process-audio-meeting-v2}
+      - N8N_AUTH_TOKEN=${N8N_AUTH_TOKEN}
+      - SESSION_TIMEOUT_MS=${SESSION_TIMEOUT_MS:-300000}
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - homelab
+
+networks:
+  homelab:
+    external: true
