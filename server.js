@@ -184,7 +184,8 @@ async function processSession(sessionId) {
       },
       maxContentLength: Infinity,
       maxBodyLength: Infinity,
-      timeout: 600000 // 10 minutes
+      timeout: 600000, // 10 minutes
+      proxy: false // Disable proxy headers to avoid N8N trust proxy error
     });
 
     console.log(`[${sessionId}] N8N response:`, response.status, response.data);
